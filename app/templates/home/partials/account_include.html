@@ -1,0 +1,185 @@
+<style>
+    .account-container {
+        display: flex;
+        align-items: center;
+        color: #000;
+        width: 100%;
+    }
+
+    #username {
+        flex-grow: 1;
+        margin: 0 10px;
+        color: #000;
+    }
+
+    .bio-container {
+        display: flex;
+        align-items: center;
+        color: #000;
+        width: 100%;
+    }
+
+    #bio {
+        flex-grow: 1;
+        margin: 0 10px;
+        color: #000;
+    }
+
+    .nickname-container {
+        display: flex;
+        align-items: center;
+        color: #000;
+        width: 100%;
+    }
+
+    #nickname {
+        flex-grow: 1;
+        margin: 0 10px;
+        color: #000;
+    }
+
+    .password-container {
+        display: flex;
+        align-items: center;
+        color: #000;
+        width: 100%;
+    }
+
+    #password {
+        flex-grow: 1;
+        margin: 0 10px;
+        color: #000;
+    }
+
+    hr {
+        border: 0;
+        height: 1px;
+        background: #333;
+    }
+
+    section .container {
+        padding: 0 50px;
+    }
+
+    .camera-button {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        border-radius: 50%;
+        padding: 10px;
+        background-color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .camera-button .material-icons {
+        font-size: 24px;
+    }
+
+</style>
+
+<div id="accountDiv">
+    <div class="" style="display: flex; justify-content: space-between; padding: 10px; margin-bottom: -10px;">
+        <div class="espaco">
+        </div>            
+    </div>
+    <br>
+    <form id="uploadForm" action="/entrada/upload_profile_picture" method="post" enctype="multipart/form-data">
+        <div class="file-field input-field">
+            {% if nickname != 'v' %}
+            <div class="accountProfilePic" style="position: relative;">
+                <img src="{{ profile_pic_url }}" alt="Profile Pic" id="accountProfilePic" style="display: block; margin-left: auto; margin-right: auto; width: 250px; height: 250px; object-fit: cover;">
+                <button class="camera-button fixed-size-button" onclick="chooseFile(event);">
+                    <span class="material-icons">camera_alt</span>
+                </button>
+            </div>
+            {% else %}
+            <div class="accountProfilePic">
+                <img src="{{ profile_pic_url }}" alt="Profile Pic" id="accountProfilePic" style="display: block; margin-left: auto; margin-right: auto; width: 250px; height: 250px; object-fit: cover;">
+            </div>
+            {% endif %}
+            <input type="file" id="photo" name="photo" accept="image/*" onchange="submitForm();" style="display: none;">
+        </div>
+    </form>
+    <div class="" style="display: flex; justify-content: space-between; padding: 10px; margin-bottom: -10px;">
+        <div class="espaco">
+        </div>            
+    </div>
+
+    <!--  -->
+    <hr>
+    <section>
+        <div class="container">
+            <div class="account-container">
+                <span class="material-icons">account_circle</span>
+                <input type="text" id="username" readonly value="{{ username.capitalize() }}">
+                <span id="edit-username" class="material-icons">lock</span>
+                <!-- <span id="edit-username" onclick="editUsername()" class="material-icons">edit</span> -->
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section>
+        <div class="container">
+            <div class="bio-container">
+                <span class="material-icons">info</span>
+                <input type="text" id="bio" readonly value="{{ bio }}">
+                <span id="edit-bio" onclick="editBio()" class="material-icons">edit</span>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section>
+        <div class="container">
+            <div class="password-container">
+                <span class="material-icons">password</span>
+                <input type="password" id="nickname" readonly value="****************">
+                <span id="edit-password" class="material-icons" type="button" data-toggle="collapse" data-target="#changePasswordForm2" aria-expanded="false" aria-controls="changePasswordForm2" >edit</span>
+            </div>
+            <!-- Formulário de alteração de senha -->
+            <div class="collapse" id="changePasswordForm2">
+                <div class="" style="display: flex; justify-content: space-between; padding: 10px; margin-bottom: -10px;">
+                    <div class="espaco">
+                    </div>            
+                </div>
+                <div class="card card-body">
+                    <form  id="changePasswordForm" action="/entrada/changepassword" method="post">
+                        <div class="form-group">
+                            <input type="password" class="form-control text-center" id="currentPassword" name="current_password" placeholder="Senha atual" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control text-center" id="newPassword" name="new_password" placeholder="Nova senha" required>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary">Alterar senha</button>
+                        </div>
+                        <div class="" style="display: flex; justify-content: space-between; padding: 10px; margin-bottom: -10px;">
+                            <div class="espaco">
+                            </div>            
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div id="errorMessage" style="display: none; color: red;">A senha atual está incorreta.</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section>
+        <div class="container">
+            <div class="nickname-container">
+                <span class="material-icons">alternate_email</span>
+                <input type="text" id="nickname" readonly value="{{ nickname }}">
+                <span id="edit-nickname" class="material-icons">lock</span>
+            </div>
+        </div>
+    </section>
+    <hr>
+    
+    <!-- Mensagem de erro -->
+    
+    <a href="/entrada/logout" id="logoutbutton" class="btn btn-danger fixed-size-button" style="position: fixed; bottom: 70px; right: 10px; z-index: 9999;">
+        <span class="material-icons">logout</span>
+    </a>
+</div>

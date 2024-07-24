@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    {% include "global/partials/head.html" %}
+    <link href="{{ url_for('static', filename='css/entrada.css') }}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    {% include 'home/partials/navbar_include.html' %}
+
+    <!-- Aba de Chat -->
+    {% include 'home/partials/chat_include.html' %}
+
+    <!-- Aba de Amigos -->
+    {% include 'home/partials/friends_include.html' %}
+
+    <!-- Aba Secure -->
+    {% include 'home/partials/secure_include.html' %}
+
+    <!-- Aba de historico -->
+    {% include 'home/partials/last_include.html' %}
+
+     <!-- Aba conta e sair -->
+    {% include 'home/partials/account_include.html' %}
+    
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Checar notificações -->
+    <script>
+        // Função para verificar notificações
+        function checkForNotifications() {
+            $('.greencircle2').each(function() {
+                var reads = JSON.parse('{{ reads|tojson|safe }}');
+                if (reads.includes(false)) {
+                    $('#greencircle2').show();
+                } else {
+                    $('#greencircle2').hide();
+                }
+            });
+        };
+        
+        // Verificar notificações a cada 5 segundos
+        setInterval(checkForNotifications, 10000);
+    </script>
+
+    <!-- Ready -->
+    <script>
+        $(document).ready(function(){
+            $('#chatButton').css('color', '#0077ff')
+            $.ajax({
+                url: '/entrada/lastmsg',
+                type: 'GET',
+                success: function(data) {
+                    $('#ultimasmsg').html(data); // Substitua 'id_da_div' pelo id da div que contém o código que você deseja atualizar
+                }
+            });
+            
+
+            $.ajax({
+                url: '/entrada/friendupdate',
+                type: 'GET',
+                success: function(data) {
+                    $('#friendupdate').html(data); // Substitua 'id_da_div' pelo id da div que contém o código que você deseja atualizar
+                }
+            });
+
+            $.ajax({
+                url: '/entrada/lastservercheck',
+                type: 'GET',
+                success: function(data) {
+                    $('#lastservercheck').html(data); // Substitua 'id_da_div' pelo id da div que contém o código que você deseja atualizar
+                }
+            });
+
+            $('.greencircle2').each(function() {
+                var reads = JSON.parse('{{ reads|tojson|safe }}');
+                if (reads.includes(false)) {
+                    $('#greencircle2').show();
+                } else {
+                    $('#greencircle2').hide();
+                }
+            });
+        });
+    </script>
+
+    <!-- Carregamento automatico -->
+    <script>
+        var ultimasmsg = '';
+        var friendupdate = '';
+        var lastservercheck = '';
+
+        setInterval(function() {
+            $.ajax({
+                url: '/entrada/lastmsg',
+                type: 'GET',
+                success: function(data) {
+                    if (data !== ultimasmsg) {
+                        $('#ultimasmsg').html(data);
+                        ultimasmsg = data;
+                    }
+                }
+            });
+
+            $.ajax({
+                url: '/entrada/friendupdate',
+                type: 'GET',
+                success: function(data) {
+                    if (data !== friendupdate) {
+                        $('#friendupdate').html(data);
+                        friendupdate = data;
+                    }
+                }
+            });
+
+            $.ajax({
+                url: '/entrada/lastservercheck',
+                type: 'GET',
+                success: function(data) {
+                    if (data !== lastservercheck) {
+                        $('#lastservercheck').html(data);
+                        lastservercheck = data;
+                    }
+                }
+            });
+        }, 2000);
+    </script>
+
+    <!-- Navbar buttons -->
+    <script>
+        $('#chatButton').click(function() {
+            $('#chatButton').css('color', '#0077ff')
+            $('#chatDiv').css('display', 'block');
+            $('#groupButton').css('color', '#ffffff')
+            $('#groupDiv').css('display', 'none');
+            $('#friendButton').css('color', '#ffffff')
+            $('#friendDiv').css('display', 'none');
+            $('#historicButton').css('color', '#ffffff')
+            $('#historicDiv').css('display', 'none');
+            $('#accountButton').css('color', '#ffffff')
+            $('#accountDiv').css('display', 'none');
+            $('#homeButton').css('color', '#ffffff')
+            $('#homeDiv').css('display', 'none');
+        });
+
+        $('#homeButton').click(function() {
+            $('#chatButton').css('color', '#ffffff')
+            $('#chatDiv').css('display', 'none');
+            $('#groupButton').css('color', '#ffffff')
+            $('#groupDiv').css('display', 'none');
+            $('#friendButton').css('color', '#ffffff')
+            $('#friendDiv').css('display', 'none');
+            $('#historicButton').css('color', '#ffffff')
+            $('#historicDiv').css('display', 'none');
+            $('#accountButton').css('color', '#ffffff')
+            $('#accountDiv').css('display', 'none');
+            $('#homeButton').css('color', '#0077ff')
+            $('#homeDiv').css('display', 'block');
+        });
+
+        $('#friendButton').click(function() {
+            $('#chatButton').css('color', '#ffffff')
+            $('#chatDiv').css('display', 'none');
+            $('#groupButton').css('color', '#ffffff')
+            $('#groupDiv').css('display', 'block');
+            $('#friendButton').css('color', '#0077ff')
+            $('#friendDiv').css('display', 'none');
+            $('#accountButton').css('color', '#ffffff')
+            $('#accountDiv').css('display', 'none');
+            $('#historicButton').css('color', '#ffffff')
+            $('#historicDiv').css('display', 'none');
+            $('#homeButton').css('color', '#ffffff')
+            $('#homeDiv').css('display', 'none');
+        });
+
+        $('#historicButton').click(function() {
+            $('#historicButton').css('color', '#0077ff')
+            $('#historicDiv').css('display', 'block');
+            $('#chatButton').css('color', '#ffffff')
+            $('#chatDiv').css('display', 'none');
+            $('#groupButton').css('color', '#ffffff')
+            $('#groupDiv').css('display', 'none');
+            $('#accountButton').css('color', '#ffffff')
+            $('#accountDiv').css('display', 'none');
+            $('#friendButton').css('color', '#ffffff')
+            $('#friendDiv').css('display', 'none');
+            $('#homeButton').css('color', '#ffffff')
+            $('#homeDiv').css('display', 'none');
+        });
+
+        $('#accountButton').click(function() {
+            $('#accountButton').css('color', '#0077ff')
+            $('#accountDiv').css('display', 'block');
+            $('#chatButton').css('color', '#ffffff')
+            $('#chatDiv').css('display', 'none');
+            $('#groupButton').css('color', '#ffffff')
+            $('#groupDiv').css('display', 'none');
+            $('#friendButton').css('color', '#ffffff')
+            $('#friendDiv').css('display', 'none');
+            $('#historicButton').css('color', '#ffffff')
+            $('#historicDiv').css('display', 'none');
+            $('#homeButton').css('color', '#ffffff')
+            $('#homeDiv').css('display', 'none');
+        });
+    </script>
+
+    <!-- Trocar foto de perfil -->
+    <script>
+        function chooseFile(event) {
+            event.preventDefault();
+            document.getElementById('photo').click();
+        }
+    
+        function submitForm() {
+            var input = document.getElementById('photo');
+            if (input.files.length > 0) {
+                document.getElementById('uploadForm').submit();
+            }
+        }
+    </script>
+
+    <!-- Add friend close -->
+    <script>
+        $('.btn-friendadd').click(function() {
+            $('#addFriendModal').modal('hide');
+        });
+    </script>
+
+    <script>
+        $('#changePasswordForm').on('submit', function(e) {
+            e.preventDefault();
+    
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function() {
+                    window.location.href = '/entrada/logout';
+                },
+                error: function(jqXHR) {
+                    if (jqXHR.status === 401) {
+                        $('#errorMessage').show();
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script>
+        function editUsername() {
+            var username = document.getElementById('username');
+            var editButton = document.getElementById('edit-username');
+        
+            if (username.readOnly) {
+                username.readOnly = false;
+                editButton.innerHTML = 'save';
+            } else {
+                username.readOnly = true;
+                editButton.innerHTML = 'edit';
+        
+                // Aqui você pode adicionar o código para salvar o username
+                // Por exemplo, você pode fazer uma solicitação AJAX para salvar o username
+                fetch('/entrada/edituser?username=' + encodeURIComponent(username.value), {
+                    method: 'POST',
+                }).then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Falha na solicitação HTTP: ' + response.status);
+                    }
+                    return response.json();
+                }).then(function(data) {
+                    if (!data.status) {
+                        alert('Falha ao salvar o username');
+                    } else {
+                        // Recarrega a página se a solicitação for bem-sucedida
+                        location.reload();
+                    }
+                }).catch(function(error) {
+                    console.error('Falha ao salvar o username:', error);
+                });
+            }
+        }
+    
+        function editBio() {
+            var bio = document.getElementById('bio');
+            var editButton = document.getElementById('edit-bio');
+    
+            if (bio.readOnly) {
+                bio.readOnly = false;
+                editButton.innerHTML = 'save';
+            } else {
+                bio.readOnly = true;
+                editButton.innerHTML = 'edit';
+    
+                // Aqui você pode adicionar o código para salvar a biografia
+                // Por exemplo, você pode fazer uma solicitação AJAX para salvar a biografia
+                fetch('/entrada/editbio?bio=' + encodeURIComponent(bio.value), {
+                    method: 'POST',
+                }).then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Falha na solicitação HTTP: ' + response.status);
+                    }
+                    return response.json();
+                }).then(function(data) {
+                    if (!data.status) {
+                        alert('Falha ao salvar a biografia');
+                    } else {
+                        // Recarrega a página se a solicitação for bem-sucedida
+                        location.reload();
+                    }
+                }).catch(function(error) {
+                    console.error('Falha ao salvar a biografia:', error);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

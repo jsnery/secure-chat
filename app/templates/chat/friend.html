@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    {% include "global/partials/head.html" %}
+    <link href="{{ url_for('static', filename='css/friend.css') }}" rel="stylesheet">
+    <style>
+        .account-container {
+            display: flex;
+            align-items: center;
+            color: #000;
+            width: 100%;
+        }
+    
+        #username {
+            flex-grow: 1;
+            margin: 0 10px;
+            color: #000;
+        }
+    
+        .bio-container {
+            display: flex;
+            align-items: center;
+            color: #000;
+            width: 100%;
+        }
+    
+        #bio {
+            flex-grow: 1;
+            margin: 0 10px;
+            color: #000;
+        }
+    
+        .nickname-container {
+            display: flex;
+            align-items: center;
+            color: #000;
+            width: 100%;
+        }
+    
+        #nickname {
+            flex-grow: 1;
+            margin: 0 10px;
+            color: #000;
+        }
+    
+        .password-container {
+            display: flex;
+            align-items: center;
+            color: #000;
+            width: 100%;
+        }
+    
+        #password {
+            flex-grow: 1;
+            margin: 0 10px;
+            color: #000;
+        }
+    
+        hr {
+            border: 0;
+            height: 1px;
+            background: #333;
+        }
+    
+        section .container {
+            padding: 0 50px;
+        }
+    
+        .camera-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            border-radius: 50%;
+            padding: 10px;
+            background-color: white;
+            border: none;
+            cursor: pointer;
+        }
+    
+        .camera-button .material-icons {
+            font-size: 24px;
+        }
+
+        /* The Modal (background) */
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            transition: opacity 0.2s ease;
+        }
+    
+        .modal-content {
+            position: relative;
+            margin: auto;
+            padding: 0;
+            width: 80%;
+        }
+    
+        .close {
+            position: absolute;
+            top: 0px;
+            right: 7px;
+            color: #ff0000;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+    
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top justify-content-start align-items-center">
+        <a class="navbar-brand" style="display: flex; justify-content: center; align-items: center; margin-right: 5px; margin-left: -5px;" href="javascript:history.back()">
+            <spam class="material-icons">arrow_back</spam>
+        </a>
+    </nav>
+
+
+    <div id="accountDiv">
+        <div class="" style="display: flex; justify-content: space-between; padding: 10px; margin-bottom: -10px;">
+            <div class="espaco">
+            </div>            
+        </div>
+        <br>
+
+        <!-- Imagem que abre o modal -->
+        <div class="file-field">
+            <div class="accountProfilePic">
+                <img src="{{ get_profile_pic_url(friend_nickname, friend_id) }}" alt="Profile Pic" id="accountProfilePic" style="display: block; margin-left: auto; margin-right: auto; width: 300px; height: 300px; object-fit: cover;" onclick="openModal(); currentSlide(1)">
+            </div>
+        </div>
+
+        <!-- O Modal -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close cursor" onclick="closeModal()">&times;</span>
+                <div class="mySlides">
+                    <img id="downloadableImage" src="{{ get_profile_pic_url(friend_nickname, friend_id) }}" style="width:100%">
+                </div>
+            </div>
+        </div>
+
+        <div class="" style="display: flex; justify-content: space-between; padding: 10px; margin-bottom: -10px;">
+            <div class="espaco">
+            </div>            
+        </div>
+    
+        <!--  -->
+        <hr>
+        <section>
+            <div class="container">
+                <div class="account-container">
+                    <span class="material-icons">account_circle</span>
+                    <input type="text" id="username" readonly value="{{ friend_name.capitalize() }}">
+                </div>
+            </div>
+        </section>
+        <hr>
+        <section>
+            <div class="container">
+                <div class="bio-container">
+                    <span class="material-icons">info</span>
+                    <input type="text" id="bio" readonly value="{{ bio }}">
+                </div>
+            </div>
+        </section>
+        <hr>
+        <section>
+            <div class="container">
+                <div class="nickname-container">
+                    <span class="material-icons">alternate_email</span>
+                    <input type="text" id="nickname" readonly value="{{ friend_nickname }}">
+                </div>
+            </div>
+        </section>
+        <hr>
+        
+    </div>
+    <!-- jQuery (necessário para os plugins JavaScript do Bootstrap) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Inclua todos os plugins compilados (abaixo), ou inclua arquivos individuais conforme necessário -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>3
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+
+    <script>
+        function openModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+            modal.style.opacity = "0";
+            setTimeout(function() {
+                modal.style.opacity = "1";
+            }, 1); // Timeout for 1ms to ensure the transition happens
+        }
+    
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.opacity = "0";
+            setTimeout(function() {
+                modal.style.display = "none";
+            }, 200); // Timeout equal to the transition duration
+        }
+    </script>
+    <script>
+        var imageElement = document.getElementById('downloadableImage');
+        var hammerInstance = new Hammer(imageElement);
+    
+        hammerInstance.on('press', function(e) {
+            downloadImage(e.target.src);
+        });
+    
+        function downloadImage(url) {
+            var link = document.createElement('a');
+            link.href = url;
+            link.download = '';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
