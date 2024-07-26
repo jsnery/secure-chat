@@ -2,8 +2,6 @@
 
 O Secure Chat é uma aplicação web de bate-papo seguro desenvolvida com Flask, um framework leve de Python para desenvolvimento web. O projeto utiliza o Firebase como banco de dados em tempo real para armazenar as mensagens e gerenciar a comunicação entre os usuários.
 
-Este projeto foi criado como parte do meu aprendizado do Flask e para praticar conceitos como autenticação de usuário, comunicação em tempo real e integração com serviços de terceiros.
-
 ## Como configurar
 
 1. **Crie seu Realtime Database [Firebase](https://firebase.google.com/)**:
@@ -78,10 +76,6 @@ firebase_init(
 - **Monitoramento de conversa com amigos em tempo real:**
   O aplicativo monitora as conversas em tempo real entre amigos, permitindo uma experiência de bate-papo em tempo real.
 
-## Notas
-
-- Este projeto é uma versão inicial e pode precisar de mais desenvolvimento e ajustes para atender às suas necessidades específicas.
-- Certifique-se de testar o aplicativo completamente e considerar a segurança e o desempenho ao implantá-lo em um ambiente de produção.
 
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/richardneri/)
 
